@@ -1,22 +1,23 @@
 <?php
 
-$booleanTrue;
-$booleanFalse;
+$booleanTrue = true;
+$booleanFalse = false;
 
-$int;
+$int = 10;
 
-$float;
+$float = 1.1;
 
-$integer;
+$integer = 10;
 
-$double;
+$double = 123456;
 
-$string;
+$string = 'text';
 
-$array;
+$array = ['array1', 'array2'];
 
-$doubleDimenssionArray;
+$doubleDimenssionArray = ["1"=>["max", ["Diego"]]];
 
-$associativeArray;
+$associativeArray = ["alex" => "max"];
 
-$null;
+$null = NULL;
+?>
