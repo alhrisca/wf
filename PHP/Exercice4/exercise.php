@@ -23,19 +23,20 @@ function getAllMondaysOfMonth($year, $month){
     $date = DateTime::createFromFormat('Yn', $year.$month);
     //	2. go to first day of the month
     $date = new DateTime('first day of' .$date->format('F Y'));
-    $arrayMondays=[];
+
     //3. if current day is not a monday, go to next monday
     $interval = DateInterval::createFromDateString('next monday');
     if ($date->format('N') != 1){
         $date->add($interval);
     }
     //4. while the date month is the needed month
-    while ($date->format('n')==$month){
+    $mondays = [];
+    while ($date->format('m')==$month){
     //4.1 Add the date into an array
-        array_push($arrayMondays, $date->format('l j, M Y'));
+       $mondays[] = $date->format('l j, M Y');
     //4.2 Go to next monday
         $date->add($interval);
     }
     //	5. return the array
-    return $arrayMondays;
+    return $mondays;
 }
