@@ -17,18 +17,20 @@ point to the brother A, else if the brother B card is upper, give a point to bro
 $A = 0;
 $B = 0;
 //giving points to one that has higher value
-foreach ($input as $value){
-    if ($value[0] > $value[1]){
+foreach ($input as $time){
+    list($a, $b) = $time; // $time = [1,2];
+    if ($a > $b){
         $A++;
     } else {
         $B++;
     }
     //declare the winner
     if($A > $B){
-        $winner = 'A';
+       $winner = 'A';
     } else{
-        $winner = 'B';
+       $winner = 'B';
     }
 };
 
-?>
+
+?> 
