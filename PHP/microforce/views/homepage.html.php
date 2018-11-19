@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hellow World!</title>
+    <title>Hello World!</title>
 </head>
 <body>
     <h1>Hello everyone</h1>
@@ -17,9 +17,9 @@
     	<tbody>
     		<?php foreach ($students as $student) { ?>
                 <tr>
-                	<td><?= $student->getId(); ?></td>
-                	<td><?= $student->getFirstname(); ?></td>
-                	<td><?= $student->getLastname(); ?></td>
+                	<td><?= $view->escape($student->getId()); ?></td>
+                	<td><?= $view->escape($student->getFirstname()); ?></td>
+                	<td><?= $view->escape($student->getLastname()); ?></td>
                 </tr>
            <?php } ?>
     	</tbody>
