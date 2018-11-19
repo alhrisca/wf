@@ -10,6 +10,11 @@ class HomepageController
     {
         $students = Student::findAll();
         //var_dump($students);
-        return EngineSingleton::getEngine()->render('homepage.html.php');
+        return EngineSingleton::getEngine()->render(
+            'homepage.html.php',
+            [
+                'students' => $students
+            ]
+        );
     }
 }

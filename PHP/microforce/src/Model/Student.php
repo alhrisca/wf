@@ -10,7 +10,7 @@ class Student
     private $firstname;
     
     private $lastname;
-    // ?Student means maybe
+
     public function create(string $firstname, string $lastname) : ?Student 
     {
         $connection = ConnectionSingleton::getConnection();
@@ -43,7 +43,32 @@ class Student
         
         return $this;
     }
-    
+    // Go to Menu - Source - Generate Getters and Setters
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
     public function delete() : bool
     {
         $connection = ConnectionSingleton::getConnection();
@@ -61,5 +86,7 @@ class Student
         $stmt = $connection->query('SELECT * FROM students');
         return $stmt->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
+    
+    
 }
 

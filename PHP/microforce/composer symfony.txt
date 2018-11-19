@@ -1,0 +1,27 @@
+Download Composer from getcomposer.org
+Git Bash in the directory and execute:
+
+Composer init
+
+install
+
+update
+
+you must see in the directory:
+composer.json, composer.lock and composer.phar and vendor
+
+auto-routing from composer loads automatically the libraries using algorithm psr-4
+mapping interface in configuration with location of files in a folder (composer.json) -> "MicroForce\\": "src/"
+
+Execute composer update after mapping in Git Bash to generate autoload files
+
+Create a folder Kernel inside src and in it a new PHP Class called Kernel.php UNCHECKING BIND!!!
+
+https://php-fig.org/pst/ PHP standard recommendations
+
+after routing we need a controller to be efficient
+
+composer require http-foundation: ^4.0
+
+composer update
+
