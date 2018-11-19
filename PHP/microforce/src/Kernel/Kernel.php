@@ -1,20 +1,32 @@
 <?php
 namespace MicroForce\Kernel;
 
-use Symfony\Component\Routing\RouteCollection;
+use MicroForce\Connection\ConnectionSingleton;
 use MicroForce\Controller\HomepageController;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RequestContext;
+use MicroForce\Engine\EngineSingleton;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
-use MicroForce\Engine\EngineSingleton;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
 
 class Kernel
 {
+    public function loadConnection(array $configuration) : \PDO{
+        return new \PDO(
+            sprintf('mysql:host=%s;dbname=%s',
+                $configuration['host'],
+                $configuration['dbname']
+            ),
+            $configuration['user'],
+            $configuration['password']
+        );
+    }
+    
     public function loadTemplateEngine($templateLocation) : EngineInterface
     {
         $loader = new FilesystemLoader($templateLocation.'/%name%');
@@ -28,6 +40,12 @@ class Kernel
     
     public function start() : string
     {
+        try {
+            ConnectionSingleton::setConnection($this->loadConnection($this->getConfig()['DB']));
+        } catch (\PDOException $e) {
+            return '500';
+        }
+        
         $engine = $this->loadTemplateEngine($this->getConfig()['template_location']);
         EngineSingleton::setEngine($engine);
 
