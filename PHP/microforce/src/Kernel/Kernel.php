@@ -13,6 +13,7 @@ use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
+use MicroForce\Factory\TemplateEngineFactory;
 
 class Kernel
 {
@@ -27,10 +28,14 @@ class Kernel
         );
     }
     
-    public function loadTemplateEngine($templateLocation) : EngineInterface
+    public function loadTemplateEngine($config) : EngineInterface
     {
-        $loader = new FilesystemLoader($templateLocation.'/%name%');
-        return new PhpEngine(new TemplateNameParser(), $loader);
+        $factory = new TemplateEngineFactory(
+            $config['template_engine'],
+            $config['template_location'].'/%name%'
+            );
+        
+        return $factory->createEngine();
     }
     
     public function getConfig()
@@ -46,7 +51,7 @@ class Kernel
             return '500';
         }
         
-        $engine = $this->loadTemplateEngine($this->getConfig()['template_location']);
+        $engine = $this->loadTemplateEngine($this->getConfig());
         EngineSingleton::setEngine($engine);
 
         // Execute routing
