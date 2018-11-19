@@ -7,12 +7,30 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
+use MicroForce\Engine\EngineSingleton;
 
 class Kernel
 {
+    public function loadTemplateEngine($templateLocation) : EngineInterface
+    {
+        $loader = new FilesystemLoader($templateLocation.'/%name%');
+        return new PhpEngine(new TemplateNameParser(), $loader);
+    }
+    
+    public function getConfig()
+    {
+        return include __DIR__ . '/../../config/config.php';
+    }
     
     public function start() : string
     {
+        $engine = $this->loadTemplateEngine($this->getConfig()['template_location']);
+        EngineSingleton::setEngine($engine);
+
         // Execute routing
         $routeDefinition = $this->executeRouting();
         // If we can math a controller
